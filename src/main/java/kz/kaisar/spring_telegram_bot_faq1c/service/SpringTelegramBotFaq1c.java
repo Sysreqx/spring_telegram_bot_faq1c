@@ -22,6 +22,17 @@ public class SpringTelegramBotFaq1c extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
 
+    private final String FIRST_BTN = "FIRST_BTN";
+    private final String SECOND_BTN = "SECOND_BTN";
+    private final String THIRD_BTN = "THIRD_BTN";
+    private final String FOURTH_BTN = "FOURTH_BTN";
+    private final String FIFTH_BTN = "FIFTH_BTN";
+    private final String SIXTH_BTN = "SIXTH_BTN";
+    private final String SEVENTH_BTN = "SEVENTH_BTN";
+    private final String EIGHTH_BTN = "EIGHTH_BTN";
+    private final String NINTH_BTN = "NINTH_BTN";
+    private final String TENTH_BTN = "TENTH_BTN";
+
     @Autowired
     public SpringTelegramBotFaq1c(BotConfig botConfig) throws TelegramApiException {
         this.botConfig = botConfig;
@@ -44,50 +55,92 @@ public class SpringTelegramBotFaq1c extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        String command = update.getMessage().getText();
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            String command = update.getMessage().getText();
+            long chatId = update.getMessage().getChatId();
 
-        if (command.equals("/start")) {
+            if (command.equals("/start")) {
 
-            // buttons
-            try {
-                register(update.getMessage().getChatId());
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-
-        } else if (update.hasCallbackQuery()) {
-            String callbackData = update.getCallbackQuery().getData();
-            long messageId = update.getCallbackQuery().getMessage().getMessageId();
-            long chatId = update.getCallbackQuery().getMessage().getChatId();
-
-            if(callbackData.equals("YES_BUTTON")){
-                String text = "You pressed YES button";
-                EditMessageText message = new EditMessageText();
-                message.setChatId(String.valueOf(chatId));
-                message.setText(text);
-                message.setMessageId((int) messageId);
-
+                // buttons
                 try {
-                    execute(message);
+                    register(update.getMessage().getChatId());
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
 
             }
-            else if(callbackData.equals("NO_BUTTON")){
-                String text = "You pressed NO button";
-                EditMessageText message = new EditMessageText();
-                message.setChatId(String.valueOf(chatId));
-                message.setText(text);
-                message.setMessageId((int) messageId);
 
-                try {
-                    execute(message);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
+            if (update.hasCallbackQuery()) {
+                String callbackData = update.getCallbackQuery().getData();
+                long messageId = update.getCallbackQuery().getMessage().getMessageId();
+                chatId = update.getCallbackQuery().getMessage().getChatId();
+
+                if (callbackData.equals(FIRST_BTN)) {
+                    String text = "You pressed first button";
+                    EditMessageText message = new EditMessageText();
+                    message.setChatId(String.valueOf(chatId));
+                    message.setText(text);
+                    message.setMessageId((int) messageId);
+
+                    try {
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                } else if (callbackData.equals(SECOND_BTN)) {
+                    String text = "You pressed SECOND button";
+                    EditMessageText message = new EditMessageText();
+                    message.setChatId(String.valueOf(chatId));
+                    message.setText(text);
+                    message.setMessageId((int) messageId);
+
+                    try {
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                } else if (callbackData.equals(THIRD_BTN)) {
+                    String text = "You pressed xxxx button";
+                    EditMessageText message = new EditMessageText();
+                    message.setChatId(String.valueOf(chatId));
+                    message.setText(text);
+                    message.setMessageId((int) messageId);
+
+                    try {
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (callbackData.equals(FOURTH_BTN)) {
+                    String text = "You pressed xxxx button";
+                    EditMessageText message = new EditMessageText();
+                    message.setChatId(String.valueOf(chatId));
+                    message.setText(text);
+                    message.setMessageId((int) messageId);
+
+                    try {
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
+                else if (callbackData.equals(FIFTH_BTN)) {
+                    String text = "You pressed xxxx button";
+                    EditMessageText message = new EditMessageText();
+                    message.setChatId(String.valueOf(chatId));
+                    message.setText(text);
+                    message.setMessageId((int) messageId);
 
+                    try {
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
+
         }
     }
 
@@ -114,29 +167,24 @@ public class SpringTelegramBotFaq1c extends TelegramLongPollingBot {
         List<InlineKeyboardButton> rowInLine1 = new ArrayList<>();
 
         var firstButton = new InlineKeyboardButton();
-
         firstButton.setText("1");
-        firstButton.setCallbackData("FIRST_BTN");
+        firstButton.setCallbackData(FIRST_BTN);
 
         var secondButton = new InlineKeyboardButton();
-
         secondButton.setText("2");
-        secondButton.setCallbackData("SECOND_BTN");
+        secondButton.setCallbackData(SECOND_BTN);
 
         var thirdButton = new InlineKeyboardButton();
-
         thirdButton.setText("3");
-        thirdButton.setCallbackData("THIRD_BTN");
+        thirdButton.setCallbackData(THIRD_BTN);
 
         var forthButton = new InlineKeyboardButton();
-
         forthButton.setText("4");
-        forthButton.setCallbackData("FORTH_BTN");
+        forthButton.setCallbackData(FOURTH_BTN);
 
         var fifthButton = new InlineKeyboardButton();
-
         fifthButton.setText("5");
-        fifthButton.setCallbackData("FIFTH_BTN");
+        fifthButton.setCallbackData(FIFTH_BTN);
 
         rowInLine1.add(firstButton);
         rowInLine1.add(secondButton);
@@ -148,29 +196,24 @@ public class SpringTelegramBotFaq1c extends TelegramLongPollingBot {
         List<InlineKeyboardButton> rowInLine2 = new ArrayList<>();
 
         var sixthButton = new InlineKeyboardButton();
-
         sixthButton.setText("6");
-        sixthButton.setCallbackData("SIXTH_BTN");
+        sixthButton.setCallbackData(SIXTH_BTN);
 
         var seventhButton = new InlineKeyboardButton();
-
         seventhButton.setText("7");
-        seventhButton.setCallbackData("SEVENTH_BTN");
+        seventhButton.setCallbackData(SEVENTH_BTN);
 
         var eighthButton = new InlineKeyboardButton();
-
         eighthButton.setText("8");
-        eighthButton.setCallbackData("EIGHTH_BTN");
+        eighthButton.setCallbackData(EIGHTH_BTN);
 
         var ninthButton = new InlineKeyboardButton();
-
         ninthButton.setText("9");
-        ninthButton.setCallbackData("NINTH_BTN");
+        ninthButton.setCallbackData(NINTH_BTN);
 
         var tenthButton = new InlineKeyboardButton();
-
         tenthButton.setText("10");
-        tenthButton.setCallbackData("TENTH_BTN");
+        tenthButton.setCallbackData(TENTH_BTN);
 
         rowInLine2.add(sixthButton);
         rowInLine2.add(seventhButton);
